@@ -32,7 +32,7 @@ public class ClienteDTO implements Serializable {
     protected Set<Integer> perfis = new HashSet<>();
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    protected LocalDate dataCriacao = LocalDate.now();
+    protected LocalDate dataCriacao;
 
     public ClienteDTO() {
         super();

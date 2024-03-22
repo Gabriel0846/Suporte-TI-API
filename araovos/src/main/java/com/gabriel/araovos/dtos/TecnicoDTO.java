@@ -32,7 +32,7 @@ public class TecnicoDTO implements Serializable {
     protected Set<Integer> perfis = new HashSet<>();
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    protected LocalDate dataCriacao = LocalDate.now();
+    protected LocalDate dataCriacao;
 
     public TecnicoDTO() {
         super();

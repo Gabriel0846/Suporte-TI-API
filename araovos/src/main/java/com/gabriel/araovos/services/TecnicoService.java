@@ -1,5 +1,6 @@
 package com.gabriel.araovos.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,7 @@ public class TecnicoService {
         objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validaPorCpfEEmail(objDTO);
         Tecnico newObj = new Tecnico(objDTO);
+        newObj.setDataCriacao(LocalDate.now());
         return repository.save(newObj);
     }
 
