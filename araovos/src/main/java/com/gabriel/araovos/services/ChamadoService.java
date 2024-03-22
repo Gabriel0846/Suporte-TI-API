@@ -44,9 +44,32 @@ public class ChamadoService {
     public Chamado update(Integer id, @Valid ChamadoDTO objDTO) {
         objDTO.setId(id);
         Chamado oldObj = findById(id);
-        oldObj = newChamado(objDTO);
+        oldObj = updateChamado(oldObj, objDTO);
         return repository.save(oldObj);
     }
+
+    private Chamado updateChamado(Chamado oldObj, ChamadoDTO obj) {
+        Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
+        Cliente cliente = clienteService.findById(obj.getCliente());
+        
+        oldObj.setTecnico(tecnico);
+        oldObj.setCliente(cliente);
+        oldObj.setPrioridade(Prioridade.toEnum(obj.getPrioridade()));
+        oldObj.setStatus(Status.toEnum(obj.getStatus()));
+        oldObj.setTitulo(obj.getTitulo());
+        oldObj.setObservacoes(obj.getObservacoes());
+        
+        if (obj.getStatus() == 0 || obj.getStatus() == 1) {
+            oldObj.setDataFechamento(null);
+        } else if (obj.getStatus() == 2) {
+            oldObj.setDataFechamento(LocalDate.now());
+        } else {
+            System.out.println("Status inválido: " + obj.getStatus());
+        }
+        oldObj.setDataAbertura(obj.getDataAbertura());
+        
+        return oldObj;
+    }     
 
     private Chamado newChamado(ChamadoDTO obj) {
         Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
